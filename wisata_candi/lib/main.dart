@@ -16,4 +16,6 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class WidgetCandi
+class WidgetCandi extends StatelessWidget{
+  
+}
