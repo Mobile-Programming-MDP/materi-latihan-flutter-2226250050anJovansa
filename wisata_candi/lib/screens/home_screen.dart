@@ -3,22 +3,23 @@ import 'package:wisata_candi/data/candi_data.dart';
 import 'package:wisata_candi/models/candi.dart';
 import 'package:wisata_candi/widgets/item_card.dart';
 
-class Homescreen extends StatefulWidget {
-  const Homescreen({super.key});
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
 
   @override
-  State<Homescreen> createState() => _HomescreenState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomescreenState extends State<Homescreen> {
+class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //TODO: 1.Buat appbar dengan judul Wisata Candi
+      //TODO 1 Buat appbar dengan judul wisata candi
       appBar: AppBar(
         title: Text('Wisata Candi'),
       ),
-      //TODO: 2.Buat body dengan GridView.builder
+
+      //TODO 2 Buat body dengan GridView.builder
       body: GridView.builder(
         gridDelegate:
             SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
@@ -29,7 +30,7 @@ class _HomescreenState extends State<Homescreen> {
           return ItemCard(candi: candi);
         },
       ),
-      //TODO: 3.Buat ItemCard sebagai return value dari GridView.builder
+      //TODO 3 Buat ItemCard sebagai return value dari GridView.builder
     );
   }
 }

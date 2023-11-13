@@ -10,24 +10,24 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
-  //TODO: 1. Deklarasi variable yang dibutuhkan
-  List<Candi> _FilteredCandis = candiList;
+//TODO 1 deklarasi variabel
+  List<Candi> _filteredCandis = candiList;
   String _searchQuery = '';
   final TextEditingController _searchController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //TODO: 2. Buat appbar dengan judul pencarian candi
+      //TODO 2 buat appbar dengan judul pencarian candi
       appBar: AppBar(
         title: const Text('Pencarian Candi'),
       ),
-      //TODO: 3. Buat body berupa column
+      //TODO 3 buat body berupa column
       body: Column(
         children: [
-          //TODO: 4. Buat Textfield pencarian sebagai anak dari column
+          //TODO 4 buat TextField pencarin sebagai anak darri Column
           Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(16),
             child: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(5),
@@ -35,11 +35,11 @@ class _SearchScreenState extends State<SearchScreen> {
               ),
               child: const TextField(
                 autofocus: false,
-                //TODO: 6. Implementasi fitur pencarian
+                //TODO 6 Implementasi fitur pencarian
                 decoration: InputDecoration(
-                  hintText: 'Cari candi ...',
+                  hintText: 'Cari Candi...',
                   prefixIcon: Icon(Icons.search),
-                  //TODO: 7. Implementasi pengosongan input
+                  //TODO 7 Implementasi pengosongan input
                   border: InputBorder.none,
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.deepPurple),
@@ -50,47 +50,52 @@ class _SearchScreenState extends State<SearchScreen> {
               ),
             ),
           ),
-          //TODO: 5. Buat Listview hasil pencarian sebagai anak dari column
+          //TODO 5 Buat ListView hasil pencarian sebagai anak dari Column
           Expanded(
             child: ListView.builder(
-              itemCount: _FilteredCandis.length,
+              itemCount: _filteredCandis.length,
               itemBuilder: (context, index) {
-                final Candi = _FilteredCandis[index];
-                //TODO: 8. Implementasi GestureDetection dan Hero Animation
+                final candi = _filteredCandis[index];
+                //TODO 8 Implementasi GestureDetector dan Hero animation
                 return Card(
-                  margin: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                  margin:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                        padding: EdgeInsets.all(8),
+                        padding: const EdgeInsets.all(8),
                         width: 100,
                         height: 100,
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(10),
                           child: Image.asset(
-                            Candi.imageAsset,
+                            candi.imageAsset,
                             fit: BoxFit.cover,
                           ),
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.all(8),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              Candi.name,
+                              candi.name,
                               style: const TextStyle(
-                                  fontSize: 16, fontWeight: FontWeight.bold),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                              ),
                             ),
                             const SizedBox(
                               height: 4,
                             ),
-                            Text(Candi.location)
+                            Text(
+                              candi.location,
+                            )
                           ],
                         ),
-                      )
+                      ),
                     ],
                   ),
                 );

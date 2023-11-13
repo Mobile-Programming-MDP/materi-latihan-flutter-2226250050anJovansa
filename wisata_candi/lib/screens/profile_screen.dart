@@ -9,11 +9,11 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  //TODO: 1. Deklarasi variable(state) yang dibutuhkan
+  //TODO 1: Deklarasi Variabel
   bool isSignIn = true;
   String fullName = "Jovansa Putra Laksana";
-  String userName = "Jovan";
-  int favoriteCandiCount = 3;
+  String userName = "Jovansa";
+  int favouriteCandiCount = 9;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +29,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Column(
                 children: [
-                  //TODO: 2. Buat Bagian ProfileHeader yang berisi foto profil
+                  //TODO 2:Buat bagian ProfileHeader isi foto
                   Align(
                     alignment: Alignment.topCenter,
                     child: Padding(
@@ -53,7 +53,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 onPressed: () {},
                                 icon: Icon(
                                   Icons.camera_alt,
-                                  color: Colors.deepOrangeAccent[50],
+                                  color: Colors.deepPurple[400],
                                 ))
                         ],
                       ),
@@ -108,8 +108,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ProfileInfoItem(
                             icon: Icons.favorite,
                             label: 'Favorit',
-                            value: favoriteCandiCount > 0
-                                ? '$favoriteCandiCount'
+                            value: favouriteCandiCount > 0
+                                ? '$favouriteCandiCount'
                                 : '',
                             iconColor: Colors.red),
                         const SizedBox(
@@ -142,7 +142,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                   ),
                 ],
-              ))
+              )),
         ],
       ),
     );
