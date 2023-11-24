@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:wisata_candi/data/candi_data.dart';
 import 'package:wisata_candi/screens/favorite_screen.dart';
-// import 'package:wisata_candi/screens/detail_screen.dart';
+import 'package:wisata_candi/screens/detail_screen.dart';
 import 'package:wisata_candi/screens/profile_screen.dart';
 import 'package:wisata_candi/screens/search_screen.dart';
 import 'package:wisata_candi/screens/signin_screen.dart';
 import 'package:wisata_candi/screens/home_screen.dart';
+import 'package:wisata_candi/screens/signup_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -35,7 +36,8 @@ class MyApp extends StatelessWidget {
         ),
         useMaterial3: true,
       ),
-      home: MainScreen(),
+      // home: MainScreen(),
+      home: SignUpScreen(),
       // home: DetailScreen(candi: candiList[0]),
       // home: HomeScreen(),
     );
@@ -76,29 +78,29 @@ class _MainScreenState extends State<MainScreen> {
                 _currentindex = index;
               });
             },
-            items: [
-              const BottomNavigationBarItem(
+            items: const [
+              BottomNavigationBarItem(
                 icon: Icon(
                   Icons.home,
                   color: Colors.deepPurple,
                 ),
                 label: 'Home',
               ),
-              const BottomNavigationBarItem(
+              BottomNavigationBarItem(
                 icon: Icon(
                   Icons.search,
                   color: Colors.deepPurple,
                 ),
                 label: 'Search',
               ),
-              const BottomNavigationBarItem(
+              BottomNavigationBarItem(
                 icon: Icon(
                   Icons.favorite,
                   color: Colors.deepPurple,
                 ),
                 label: 'Favorite',
               ),
-              const BottomNavigationBarItem(
+              BottomNavigationBarItem(
                 icon: Icon(
                   Icons.person,
                   color: Colors.deepPurple,
