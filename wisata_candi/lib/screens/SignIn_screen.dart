@@ -1,29 +1,27 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:wisata_candi/widgets/profile_info_item.dart';
 import 'package:encrypt/encrypt.dart' as encrypt;
-import 'package:flutter/material.dart';
 
-class signInScreen extends StatefulWidget {
-  signInScreen({super.key});
+class SignInScreen extends StatefulWidget {
+  SignInScreen({super.key});
 
   @override
-  State<signInScreen> createState() => _signInScreenState();
+  State<SignInScreen> createState() => _SignInScreenState();
 }
 
-class _signInScreenState extends State<signInScreen> {
-  //TOD: 1 Deklarasikan variabel
+class _SignInScreenState extends State<SignInScreen> {
+  //TODO: 1. Deklarasikan variabel
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-
-  String _errortext = ' ';
+  String _errorText = '';
   bool _isSignedIn = false;
   bool _obscurePassword = true;
 
   Future<Map<String, String>> _retrieveAndDecryptDataFromPrefs(
     SharedPreferences sharedPreferences,
   ) async {
-    //final sharedPreferences = await sharedPreferences;
     final encryptedUsername = sharedPreferences.getString('username') ?? '';
     final encryptedPassword = sharedPreferences.getString('password') ?? '';
     final keyString = sharedPreferences.getString('key') ?? '';
@@ -36,7 +34,7 @@ class _signInScreenState extends State<signInScreen> {
     final decryptedUsername = encrypter.decrypt64(encryptedUsername, iv: iv);
     final decryptedPassword = encrypter.decrypt64(encryptedPassword, iv: iv);
 
-    //mengembalikan data terdeskripsi
+    //Mengembalikan data terdekripsi
     return {'username': decryptedUsername, 'password': decryptedPassword};
   }
 
@@ -44,9 +42,10 @@ class _signInScreenState extends State<signInScreen> {
     try {
       final Future<SharedPreferences> prefsFuture =
           SharedPreferences.getInstance();
+
       final String username = _usernameController.text;
       final String password = _passwordController.text;
-      print('Sign In attempt');
+      print('Sign in attempt');
 
       if (username.isNotEmpty && password.isNotEmpty) {
         final SharedPreferences prefs = await prefsFuture;
@@ -56,52 +55,95 @@ class _signInScreenState extends State<signInScreen> {
           final decryptedPassword = data['password'];
 
           if (username == decryptedUsername && password == decryptedPassword) {
-            _errortext = '';
+            _errorText = '';
             _isSignedIn = true;
             prefs.setBool('isSignedIn', true);
-            //Pemanggilan untuk menghapus semua halaman dalam tumpukan navigasi
+            //Pemanggilan untuk menghapus semua halaman dalam timpukan navigasi
             WidgetsBinding.instance.addPostFrameCallback((_) {
               Navigator.of(context).popUntil((route) => route.isFirst);
             });
             //Sign in berhasil, navigasikan ke layar utama
-            WidgetsBinding.instance.addPostFrameCallback((_) {
+            WidgetsBinding.instance.addPersistentFrameCallback((_) {
               Navigator.pushReplacementNamed(context, '/');
             });
-            print('Sign Insucceeded');
+            print('Sign in succeeded');
           } else {
-            print('Username or Password is incorrect');
+            print('Username or password is incorrect');
           }
         } else {
           print('No stored credentials found');
         }
       } else {
         print('Username and password cannot be empty');
-        //Ta,bahkan pesan untuk kasus ketika username atau password kosong
+        //Tambahkan pesan untuk kasus ketika username atau password kosong
       }
     } catch (e) {
       print('An error occurred: $e');
     }
+
+    //   final SharedPreferences prefs = await SharedPreferences.getInstance();
+    //   final String savedUsername = prefs.getString('username') ?? "";
+    //   final String savedPassword = prefs.getString('password') ?? "";
+    //   final String enteredUsername = _usernameController.text.trim();
+    //   final String enteredPassword = _passwordController.text.trim();
+
+    //   if (enteredUsername.isEmpty || enteredPassword.isEmpty) {
+    //     setState(() {
+    //       _errorText = 'Nama pengguna dan kata sandi harus diisi.';
+    //     });
+    //     return;
+    //   }
+
+    //   if (savedUsername.isEmpty || savedPassword.isEmpty) {
+    //     setState(() {
+    //       _errorText =
+    //           'Pengguna belum terdaftar. Silahkan daftar terlebih dahulu';
+    //     });
+    //     return;
+    //   }
+
+    //   if (enteredUsername == savedUsername && enteredPassword == savedPassword) {
+    //     setState(() {
+    //       _errorText = '';
+    //       _isSignedIn = true;
+    //       prefs.setBool('isSignedIn', true);
+    //     });
+
+    //     //Pemanggilan untuk menghapus semua halaman dalam tumpukan navigasi
+    //     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+    //       Navigator.of(context).popUntil((route) => route.isFirst);
+    //     });
+
+    //     //Sign in berhasil, navigasikan ke layar utama
+    //     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+    //       Navigator.pushReplacementNamed(context, '/');
+    //     });
+    //   } else {
+    //     setState(() {
+    //       _errorText = 'Nama pengguna atau kata sandi salah.';
+    //     });
+    //   }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //TODo: 2 pasang AppBar
+      //TODO: 2. Pasang AppBar
       appBar: AppBar(
-        title: Text('Sign in'),
+        title: Text('Sign In'),
       ),
-      //TODO: 3 Pasang body
+      //TODO: 3. Pasang body
       body: Center(
         child: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(16),
             child: Form(
               child: Column(
-                //TODO: 4 Atur mainAxisAligmnet dan CrossAxisAlignment
+                //TODO: 4. Atur mainAxisAlignment dan crossAxisAlignment
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  //TODo :5 Pasang TextFormFIeld Nama pengguna
+                  //TODO: 5. Pasang TextFormField Nama Pengguna
                   TextFormField(
                     controller: _usernameController,
                     decoration: InputDecoration(
@@ -109,17 +151,19 @@ class _signInScreenState extends State<signInScreen> {
                       border: OutlineInputBorder(),
                     ),
                   ),
-                  //TODO :6 Pasang TextForm Field kata sandi
+                  //TODO: 6. Pasang TextFormField Kata Sandi
                   SizedBox(height: 20),
                   TextFormField(
                     controller: _passwordController,
                     decoration: InputDecoration(
                       labelText: "Kata Sandi",
-                      errorText: _errortext.isNotEmpty ? _errortext : null,
+                      errorText: _errorText.isNotEmpty ? _errorText : null,
                       border: OutlineInputBorder(),
                       suffixIcon: IconButton(
                         onPressed: () {
-                          _obscurePassword = !_obscurePassword;
+                          setState(() {
+                            _obscurePassword = !_obscurePassword;
+                          });
                         },
                         icon: Icon(
                           _obscurePassword
@@ -130,30 +174,32 @@ class _signInScreenState extends State<signInScreen> {
                     ),
                     obscureText: _obscurePassword,
                   ),
-                  //TODo :7 pasang elevatedButton Sign in
+                  //TODO: 7. Pasang ElevatedButton Sign In
                   SizedBox(height: 20),
                   ElevatedButton(onPressed: () {}, child: Text('Sign In')),
-                  //TODO: 8 Pasang TextButton Sign UP
+                  // TODO: 8. Pasang TextButton Sign Up
                   SizedBox(height: 10),
+                  // TextButton(
+                  //   onPressed: (){},
+                  //   child: Text('Belum punya akun? Daftar di sini.')),
                   RichText(
-                    text: TextSpan(
-                        text: 'Belum punya akun ?',
-                        style:
-                            TextStyle(fontSize: 16, color: Colors.deepPurple),
-                        children: <TextSpan>[
-                          TextSpan(
-                            text: 'Daftra di sini',
-                            style: TextStyle(
-                                color: Colors.blue,
-                                decoration: TextDecoration.underline,
-                                fontSize: 16),
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = () {
-                                Navigator.pushNamed(context, '/signup');
-                              },
-                          )
-                        ]),
-                  )
+                      text: TextSpan(
+                          text: 'Belum punya akun?',
+                          style:
+                              TextStyle(fontSize: 16, color: Colors.deepPurple),
+                          children: <TextSpan>[
+                        TextSpan(
+                          text: 'Daftar di sini.',
+                          style: TextStyle(
+                              color: Colors.blue,
+                              decoration: TextDecoration.underline,
+                              fontSize: 16),
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () {
+                              Navigator.pushNamed(context, '/signup');
+                            },
+                        )
+                      ]))
                 ],
               ),
             ),
